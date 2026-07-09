@@ -273,6 +273,10 @@
     <p class="tagline">Des bretzels tout juste sortis, vendus sur la plage — et livrés chez toi si tu en veux plus qu'une bouchée.</p>
   </section>
 
+  <svg class="wave" viewBox="0 0 500 34" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,10 C60,30 110,-6 170,10 C230,26 280,-6 340,10 C400,26 450,-6 500,10 L500,34 L0,34 Z" fill="#F5E6C8"/>
+  </svg>
+
   <!-- PROCHAIN SPOT — bandeau plein écran, quand tu as une date, remplace le contenu ci-dessous :
        <h2>Nom de la plage</h2> <p>Repère / adresse</p> <span class="spot-time">Jour · horaires</span> -->
   <div class="spot-banner">
@@ -282,13 +286,9 @@
       <circle cx="12" cy="9" r="2.6" fill="#fff"/>
     </svg>
     <h2>Bientôt annoncé</h2>
-    <p>On prépare notre prochain emplacement plage — suis-nous sur Instagram pour être la première informée dès que la date tombe.</p>
+    <p>Suis-nous sur les réseaux pour être informé.e dès que la date et le lieu tombent.</p>
     <span class="spot-time">À venir 🏖️</span>
   </div>
-
-  <svg class="wave" viewBox="0 0 500 34" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,10 C60,30 110,-6 170,10 C230,26 280,-6 340,10 C400,26 450,-6 500,10 L500,34 L0,34 Z" fill="#F5E6C8"/>
-  </svg>
 
   <!-- PROMO -->
   <div class="section" style="padding-top:0;">
@@ -361,7 +361,7 @@
 
       <div class="confirm" id="confirmBox">
         <h3>C'est noté !</h3>
-        <p>On revient vers toi très vite pour confirmer ta commande et convenir de l'heure de livraison.</p>
+        <p>Ton appli mail vient de s'ouvrir avec ta demande pré-remplie — il ne te reste plus qu'à appuyer sur "Envoyer" 📩</p>
       </div>
     </div>
   </div>
@@ -385,6 +385,31 @@
 
   document.getElementById('orderForm').addEventListener('submit', function(e){
     e.preventDefault();
+
+    var name = document.getElementById('name').value;
+    var phone = document.getElementById('phone').value;
+    var qty = document.getElementById('qty').value;
+    var topping = document.getElementById('topping').value;
+    var date = document.getElementById('date').value;
+    var address = document.getElementById('address').value;
+    var notes = document.getElementById('notes').value;
+
+    var subject = 'Commande Mademoiselle Pretzel — ' + name;
+    var body =
+      'Prénom et nom : ' + name + '\n' +
+      'Téléphone : ' + phone + '\n' +
+      'Quantité : ' + qty + '\n' +
+      'Topping : ' + topping + '\n' +
+      'Date souhaitée : ' + date + '\n' +
+      'Adresse de livraison : ' + address + '\n' +
+      'Remarques : ' + (notes || '—');
+
+    var mailtoLink = 'mailto:hello@mademoisellepretzel.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailtoLink;
+
     this.classList.add('hide');
     document.getElementById('confirmBox').classList.add('show');
   });
